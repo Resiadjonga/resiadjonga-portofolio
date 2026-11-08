@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Vite affiche l’adresse locale dans le terminal. Les pages disponibles sont `/`, `/apropos`, `/competences`, `/contact`, `/faq` et `/confidentialite`.
+Vite affiche l’adresse locale dans le terminal. Les pages disponibles sont `/`, `/apropos`, `/competences`, `/cv`, `/contact`, `/faq`, `/confidentialite` et `/conditions-utilisation`.
 
 ## Défi personnel : thèmes clair et sombre
 
