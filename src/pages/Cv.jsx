@@ -10,13 +10,13 @@ export default function Cv({ language }) {
       </SectionTitle>
       <div className="mb-8 flex flex-wrap items-center gap-4 border-t border-stone-200 pt-8 dark:border-white/10">
         <a
-          href="/cv-resia-djonga.jpeg"
-          download="CV-Resia-Djonga.jpeg"
+          href="/cv-resia-djonga.pdf"
+          download="CV-Resia-Djonga.pdf"
           className="inline-flex items-center gap-2 rounded-full bg-orange-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
         >
-          {en ? 'Download CV (JPEG)' : 'Télécharger le CV (JPEG)'} <span aria-hidden="true">↓</span>
+          {en ? 'Download CV (PDF)' : 'Télécharger le CV (PDF)'} <span aria-hidden="true">↓</span>
         </a>
-        <span className="text-sm text-stone-500 dark:text-stone-400">{en ? 'Original image · 325 KB' : 'Image originale · 325 Ko'}</span>
+        <span className="text-sm text-stone-500 dark:text-stone-400">{en ? 'PDF document' : 'Document PDF'}</span>
       </div>
       <figure className="mx-auto max-w-4xl overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm dark:border-white/10">
         <img

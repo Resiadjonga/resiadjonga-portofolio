@@ -4,6 +4,7 @@ import ProjectsSection from '../components/ProjectsSection'
 
 export default function Accueil({ navigate, language }) {
   const en = language === 'en'
+  const orbitTools = [...new Set([...technologies, 'HTML5', 'CSS3', 'JavaScript ES6+', 'Vite'])]
   const highlights = en
     ? [['01', 'Useful interfaces', 'A thoughtful experience'], ['02', 'From concept to code', 'An end-to-end approach'], ['03', 'Curiosity without limits', 'Always learning']]
     : [['01', 'Des interfaces utiles', 'Une expérience soignée'], ['02', 'Du concept au code', 'Une approche complète'], ['03', 'Une curiosité sans fin', 'Toujours en apprentissage']]
@@ -28,9 +29,20 @@ export default function Accueil({ navigate, language }) {
           <div className="relative ml-4 mt-4 w-fit rounded-2xl border border-stone-200 bg-white/95 p-4 shadow-xl dark:border-white/10 dark:bg-stone-900/95"><p className="font-mono text-[10px] text-orange-600 dark:text-orange-400">DEVELOPER</p><p className="mt-1 text-sm font-medium">{en ? 'Creating with intention.' : 'Créer avec intention.'}</p></div>
         </div>
       </section>
-      <section className="border-y border-stone-200 py-7 dark:border-white/10">
-        <p className="mb-5 font-mono text-[10px] uppercase tracking-[.2em] text-stone-500">{en ? 'Technologies & tools' : 'Technologies & outils'}</p>
-        <div className="flex flex-wrap gap-x-10 gap-y-4">{technologies.map((technology) => <span key={technology} className="font-display text-xl text-stone-600 dark:text-stone-300">{technology}</span>)}</div>
+      <section className="border-y border-stone-200 py-12 dark:border-white/10">
+        <p className="mb-8 text-center font-mono text-[10px] uppercase tracking-[.2em] text-stone-500">{en ? 'Technologies & tools' : 'Technologies & outils'}</p>
+        <div className="relative mx-auto aspect-square w-full max-w-[420px]" role="list" aria-label={en ? 'Technologies and tools' : 'Technologies et outils'}>
+          <div className="absolute inset-[16%] rounded-full border border-orange-600/20" />
+          <div className="absolute inset-[29%] grid place-items-center rounded-full bg-orange-600/5 text-center">
+            <span className="font-display text-lg font-semibold">Tech<br />Stack</span>
+          </div>
+          <div className="absolute inset-0 animate-spin [animation-duration:42s] motion-reduce:animate-none">
+            {orbitTools.map((technology, index) => {
+              const angle = (360 / orbitTools.length) * index
+              return <span role="listitem" key={technology} className="absolute left-1/2 top-1/2 [transform:rotate(var(--angle))_translateX(min(42vw,175px))]" style={{ '--angle': `${angle}deg` }}><span className="block max-w-[100px] -rotate-[var(--angle)] whitespace-nowrap rounded-full border border-orange-600/20 bg-white/90 px-2.5 py-1.5 text-center text-xs font-semibold leading-tight text-stone-700 shadow-sm dark:bg-stone-900/95 dark:text-stone-200">{technology}</span></span>
+            })}
+          </div>
+        </div>
       </section>
       <ProjectsSection language={language} />
       <section className="grid gap-8 rounded-3xl bg-[#e8ecf5] p-7 sm:grid-cols-3 sm:p-10 dark:bg-[#111827]">
