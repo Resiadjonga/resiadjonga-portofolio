@@ -25,16 +25,27 @@ export default function Contact({ language }) {
     }
     form.elements.message.setCustomValidity('')
     if (attachments.reduce((total, file) => total + file.size, 0) > 10 * 1024 * 1024) {
-      setSendError(en ? 'Attachments must total less than 10 MB.' : 'La taille totale des fichiers doit être inférieure à 10 Mo.')
+      setSendError(en ? 'Your files are too large. Please choose files with a combined size of 10 MB or less.' : 'Vos données sont trop lourdes. Veuillez choisir des fichiers dont le total ne dépasse pas 10 Mo.')
       return
     }
     setSendError('')
+    const attachmentSummary = selectedProject
+      ? selectedProject.items.length > 1
+        ? `${selectedProject.label} (${selectedProject.items.length} ${en ? 'files' : 'fichiers'})`
+        : selectedProject.label
+      : attachments.map((file) => file.name).join(', ')
     const subject = en ? `Project inquiry from ${name}` : `Proposition de projet de ${name}`
     const body = en
-      ? `Name: ${name}\nEmail: ${email}\n\nProject details:\n${project || '(See attached project files)'}${attachments.length ? `\n\nSelected files: ${attachments.map((file) => file.webkitRelativePath || file.name).join(', ')}\nPlease attach these files to the email before sending.` : ''}`
-      : `Nom : ${name}\nE-mail : ${email}\n\nDescription du projet :\n${project || '(Voir les fichiers du projet en pièce jointe)'}${attachments.length ? `\n\nFichiers sélectionnés : ${attachments.map((file) => file.webkitRelativePath || file.name).join(', ')}\nVeuillez joindre ces fichiers à l’e-mail avant de l’envoyer.` : ''}`
+      ? `Name: ${name}\nEmail: ${email}\n\nProject details:\n${project || '(See attached project files)'}${attachments.length ? `\n\nSelected: ${attachmentSummary}\nPlease attach the selected files to the email before sending.` : ''}`
+      : `Nom : ${name}\nE-mail : ${email}\n\nDescription du projet :\n${project || '(Voir les fichiers du projet en pièce jointe)'}${attachments.length ? `\n\nSélection : ${attachmentSummary}\nVeuillez joindre les fichiers sélectionnés à l’e-mail avant de l’envoyer.` : ''}`
     const params = new URLSearchParams({ view: 'cm', fs: '1', to: 'resiadjonga20@gmail.com', su: subject, body })
-    if (window.open(`https://mail.google.com/mail/?${params.toString()}`, '_blank', 'noopener,noreferrer')) setEmailPrepared(true)
+    const emailWindow = window.open(`https://mail.google.com/mail/?${params.toString()}`, '_blank')
+    if (emailWindow) {
+      emailWindow.opener = null
+      setEmailPrepared(true)
+    } else {
+      setSendError(en ? 'Allow pop-ups to open the email.' : 'Autorisez les fenêtres contextuelles pour ouvrir l’e-mail.')
+    }
   }
 
   return (
@@ -80,10 +91,15 @@ export default function Contact({ language }) {
           <div>
             <button type="submit" className="inline-flex items-center rounded-full bg-orange-600 px-7 py-4 text-sm font-semibold text-white transition hover:bg-orange-700">{en ? 'Send' : 'Envoyer'} <span className="ml-4" aria-hidden="true">↗</span></button>
             {emailPrepared && <p className="mt-3 rounded-xl border border-green-600/30 bg-green-600/10 px-4 py-3 text-sm text-green-800 dark:text-green-300" role="status">{en ? 'Your Gmail draft is ready. Attach the selected files before sending.' : 'Votre brouillon Gmail est prêt. Joignez les fichiers sélectionnés avant de l’envoyer.'}</p>}
-            {sendError && <p className="mt-3 rounded-xl border border-red-600/30 bg-red-600/10 px-4 py-3 text-sm text-red-800 dark:text-red-300" role="alert">{sendError}</p>}
           </div>
         </form>
       </section>
+      {sendError && <div className="fixed inset-0 z-50 grid place-items-center bg-stone-950/50 p-4" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSendError('') }}>
+        <div role="alertdialog" aria-modal="true" aria-labelledby="project-send-error" className="relative w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-2xl dark:bg-stone-900">
+          <button type="button" onClick={() => setSendError('')} aria-label={en ? 'Close' : 'Fermer'} className="absolute right-3 top-3 inline-flex size-9 items-center justify-center rounded-full text-xl text-stone-500 transition hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-white/10 dark:hover:text-white">×</button>
+          <p id="project-send-error" className="font-display text-lg font-semibold text-red-700 dark:text-red-400">{sendError}</p>
+        </div>
+      </div>}
     </div>
   )
 }
