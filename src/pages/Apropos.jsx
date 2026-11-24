@@ -5,7 +5,7 @@ export default function Apropos({ language }) {
   const en = language === 'en'
   return (
     <div>
-      <SectionTitle title={en ? <>Curious by nature.<br /><em className="font-accent text-orange-600 dark:text-orange-400">Thoughtful by choice.</em></> : <>Développeuse web passionnée par la création<br /><em className="font-accent text-orange-600 dark:text-orange-400">d’expériences numériques utiles, intuitives et évolutives.</em></>}>{en ? 'I build useful, robust digital products designed around the people who use them.' : 'Je suis Resia Djonga, développeuse web en formation chez PrimeTek, animée par la curiosité, la créativité et l’envie de transformer les idées en solutions numériques concrètes.'}</SectionTitle>
+      <SectionTitle title={en ? <>Curious by nature.<br /><em className="font-accent text-orange-600 dark:text-orange-400">Thoughtful by choice.</em></> : <>Développeuse web passionnée par la création<br /><em className="font-accent text-orange-600 dark:text-orange-400">d’expériences numériques utiles, intuitives et évolutives.</em></>}>{en ? 'I build useful, robust digital products designed around the people who use them.' : null}</SectionTitle>
       {en ? (
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <img src={workPhoto} alt="Resia Djonga working at her desk" className="aspect-[4/3] w-full rounded-3xl object-cover transition-transform duration-500 ease-out hover:scale-[1.025] active:scale-[.99] motion-reduce:transform-none" />
@@ -20,6 +20,7 @@ export default function Apropos({ language }) {
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-20">
           <img src={workPhoto} alt="Resia Djonga au travail dans son bureau" className="aspect-[4/3] w-full rounded-3xl object-cover transition-transform duration-500 ease-out hover:scale-[1.025] active:scale-[.99] motion-reduce:transform-none lg:sticky lg:top-24" />
           <div className="space-y-10 text-base leading-8 text-stone-600 dark:text-stone-300">
+            <p>Je suis Resia Djonga, développeuse web en formation chez PrimeTek, animée par la curiosité, la créativité et l’envie de transformer les idées en solutions numériques concrètes.</p>
             <p>J’aime comprendre les besoins dans leur globalité, réfléchir aux meilleures approches et concevoir des interfaces qui allient simplicité, esthétique et fonctionnalité. Pour moi, le développement web ne consiste pas uniquement à écrire du code : c’est avant tout imaginer des expériences qui facilitent la vie des utilisateurs et répondent à de véritables besoins.</p>
             <section>
               <h2 className="font-display text-2xl font-semibold text-stone-900 dark:text-stone-100">Mon parcours</h2>
